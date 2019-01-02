@@ -1,0 +1,173 @@
+{% requireAdmin %}
+
+{% set crumbs = [
+    { label: "Settings"|t('app'), url: url('settings') },
+    { label: "Plugins"|t('app'), url: url('settings/plugins') }
+] %}
+
+{% set fullPageForm = true %}
+
+{% extends "_layouts/cp" %}
+{% set title = plugin.name %}
+{% import "_includes/forms" as forms %}
+
+{% block tabs %}
+{% include '_includes/tabs' with { tabs: [{label: 'General', url: '#general'}, {label: 'Fields', url: '#fields'}, {label: 'Sections', url: '#sections'}] }%}
+{% endblock %}
+
+{% set excludedFieldRows = [] %}
+{% set excludedSectionRows = [] %}
+{% for field in craft.app.fields.getAllFields() %}
+    {% set excludedFieldRows = excludedFieldRows|merge({
+        (field.handle): {
+            id: field.handle,
+            name: field.name,
+            visible: settings.excludedFields[field.handle].visible ?? 0
+        }
+    })|sort() %}
+{% endfor %}
+{% for section in craft.app.sections.getAllSections() %}
+    {% set excludedSectionRows = excludedSectionRows|merge({
+        (section.handle): {
+            id: section.handle,
+            name: section.name,
+            visible: settings.excludedSections[section.handle].visible ?? 0
+        }
+    }) %}
+{% endfor %}
+
+{% block content %}
+<input type="hidden" name="action" value="plugins/save-plugin-settings">
+<input type="hidden" name="pluginHandle" value="{{ plugin.handle }}">
+{{ redirectInput('settings') }}
+
+<div id="general">
+    {{ forms.lightswitchField({
+        label: 'Include Disabled?'|t('app'),
+        instructions: 'Should disabled entries, categories, etc. be included in the API results.',
+        id: 'disabled',
+        name: 'settings[disabled]',
+        on: settings.disabled
+    }) }}
+    
+    {{ forms.lightswitchField({
+        label: 'Enable Assets?'|t('app'),
+        instructions: 'Enable the asset endpoints',
+        id: 'assets',
+        name: 'settings[assets]',
+        on: settings.assets
+    }) }}    
+    
+    {{ forms.lightswitchField({
+        label: 'Enable Tags?'|t('app'),
+        instructions: 'Enable the tag endpoints',
+        id: 'tags',
+        name: 'settings[tags]',
+        on: settings.tags
+    }) }}
+</div>
+<div id="fields" class="hidden">
+    {{ forms.textField({
+        id: 'fieldSearch',
+        label: 'Visibility of fields in the API',
+        instructions: 'You can optionally exclude any field from showing in the API results.',
+        placeholder: 'Filter the fields'
+    }) }}
+    
+    {{ forms.editableTableField({
+        id: 'excludedFields',
+        name: 'settings[excludedFields]',
+        cols: {
+            id: {
+                type: 'heading',
+                heading: 'Field Handle'
+            },
+            name: {
+                type: 'heading',
+                heading: 'Field Name'
+            },
+            visible: {
+                type: 'lightswitch',
+                heading: 'Exclude?'
+            }
+        },
+        rows: excludedFieldRows,
+        staticRows: true
+    }) }}
+</div>
+<div id="sections" class="hidden">
+    {{ forms.textField({
+        id: 'sectionSearch',
+        label: 'Visibility of sections in the API',
+        instructions: 'You can optionally exclude any section from showing in the API results.',
+        placeholder: 'Filter the sections'
+    }) }}
+    
+    {{ forms.editableTableField({
+        id: 'excludedSections',
+        name: 'settings[excludedSections]',
+        cols: {
+            id: {
+                type: 'heading',
+                heading: 'Section Handle'
+            },
+            name: {
+                type: 'heading',
+                heading: 'Section Name'
+            },
+            visible: {
+                type: 'lightswitch',
+                heading: 'Exclude?'
+            }
+        },
+        rows: excludedSectionRows,
+        staticRows: true
+    }) }}
+</div>
+{% endblock %}
+
+{% js %}
+
+    let searchField = document.querySelector('#fieldSearch');
+    let excludedFields = document.querySelector('#excludedFields');
+    
+    searchField.addEventListener('keyup', (event) => {
+        let fieldValues = excludedFields.querySelectorAll("th[scope='row']");
+        let searchValue = event.target.value;
+        
+        fieldValues.forEach(field => {
+            let value = field.innerHTML;
+            let lower = value.toLowerCase();
+            let parent = field.parentElement;
+            
+            if (lower.search(searchValue.toLowerCase()) === -1) {
+                parent.style.display = 'none';
+            } else {
+                parent.style.display = 'table-row';   
+            }
+        });
+                
+    });
+    
+    let searchSection = document.querySelector('#sectionSearch');
+    let excludedSections = document.querySelector('#excludedSections');
+    
+    searchSection.addEventListener('keyup', (event) => {
+        let sectionValues = excludedSections.querySelectorAll("th[scope='row']");
+        let searchValue = event.target.value;
+        
+        sectionValues.forEach(section => {
+            let value = section.innerHTML;
+            let lower = value.toLowerCase();
+            let parent = section.parentElement;
+            
+            if (lower.search(searchValue.toLowerCase()) === -1) {
+                parent.style.display = 'none';
+            } else {
+                parent.style.display = 'table-row';   
+            }
+        });
+                
+    });
+
+{% endjs %}
