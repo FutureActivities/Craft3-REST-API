@@ -9,7 +9,7 @@ You can optionally exclude certain fields and sections from the API to avoid exp
 
 Full documentation of all endpoints can be found at:
 
-    https://craftrest.docs.apiary.io/
+[https://craftrest.docs.apiary.io/](https://craftrest.docs.apiary.io/)
     
 ## Examples
 
@@ -31,11 +31,11 @@ From the control panel the plugin can be configured with the following settings:
 
 ### General
 
-**Include Disabled** - Should disabled entries, categories, etc. be included in the API results.
+`Include Disabled` - Should disabled entries, categories, etc. be included in the API results.
 
-**Enable Assets** - Enable the asset endpoints
+`Enable Assets` - Enable the asset endpoints
 
-**Enable Tags** - Enable the tag endpoints
+`Enable Tags` - Enable the tag endpoints
 
 ### Fields
 
