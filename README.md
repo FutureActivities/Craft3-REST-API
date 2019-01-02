@@ -13,17 +13,18 @@ Full documentation of all endpoints can be found at:
     
 ## Examples
 
+Get all categories:
+
     GET /rest/v1/categories
     
-Returns all categories
+Get all categories with the related field expanded - this will return data objects instead of IDs.
 
     GET /rest/v1/categories?expand=related
-    
-Returns all categories with the related field expanded - this will return data objects instead of IDs.
+
+Get a specific category
 
     GET /rest/v1/categories/18
     
-Return a specific category
 
 ## Settings
 
