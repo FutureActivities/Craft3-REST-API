@@ -12,6 +12,7 @@ class Element extends Model
     public $id;
     public $title;
     public $slug;
+    public $url;
     public $enabled = true;
     public $parentId = null;
     public $descendants = [];
@@ -29,6 +30,7 @@ class Element extends Model
             'id',
             'title',
             'slug',
+            'url',
             'enabled',
             'parentId',
             'descendants',
@@ -111,6 +113,7 @@ class Element extends Model
         $this->id = $this->model->id;
         $this->title = $this->model->title;
         $this->slug = $this->model->slug;
+        $this->url = $this->model->uri;
         $this->enabled = $this->model->enabled == 1;
         $this->parentId = $this->model->parent ? $this->model->parent->id : false;
         $this->descendants = $this->model->hasDescendants ? $this->model->descendants->ids() : [];

@@ -6,7 +6,6 @@ use futureactivities\rest\Plugin;
 
 class Asset extends Element
 {
-    public $url;
     public $transform = null;
     
     public function fields()
