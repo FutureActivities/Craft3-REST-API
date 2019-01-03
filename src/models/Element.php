@@ -60,6 +60,9 @@ class Element extends Model
             // Define expandable function
             $result[$handle] = function($model) use ($class, $element) {
                 $data = [];
+                
+                // var_dump(get_class($element));
+                // die();
                 foreach ($element->all() AS $item) {
                     $data[] = new $class([
                         'model' => $item
@@ -134,6 +137,9 @@ class Element extends Model
      */
     protected function getElementClass($element)
     {
+        if ($element instanceof \craft\elements\db\MatrixBlockQuery)
+            return 'futureactivities\rest\models\Matrix';
+            
         if ($element instanceof \craft\elements\db\EntryQuery)
             return 'futureactivities\rest\models\Entry';
             
