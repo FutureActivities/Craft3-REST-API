@@ -64,8 +64,8 @@ class UserController extends ActiveController
     public function actionCreate()
     {
         $request = \Craft::$app->request;
-        $customerData = json_decode($request->getRawBody(), true);
-
+        $customerData = !empty($request->getBodyParams()) ? $request->getBodyParams() : json_decode($request->getRawBody(), true);
+        
         $user = new User();
         $user->username = isset($customerData['customer']['username']) ? $customerData['customer']['username'] : $customerData['customer']['email'];
         $user->email = $customerData['customer']['email'];
@@ -109,13 +109,18 @@ class UserController extends ActiveController
         $request = \Craft::$app->request;
         $user = \Craft::$app->users->getUserById($id);
         
-        $customerData = json_decode($request->getRawBody(), true);
+        $customerData = !empty($request->getBodyParams()) ? $request->getBodyParams() : json_decode($request->getRawBody(), true);
         if (empty($customerData))
             throw new BadRequestException('Missing user data.');
             
-        $user->email = $customerData['customer']['email'];
-        $user->firstName = $customerData['customer']['firstName'];
-        $user->lastName = $customerData['customer']['lastName'];
+        if (isset($customerData['customer']) && isset($customerData['customer']['email']))
+            $user->email = $customerData['customer']['email'];
+            
+        if (isset($customerData['customer']) && isset($customerData['customer']['firstName']))
+            $user->firstName = $customerData['customer']['firstName'];
+            
+        if (isset($customerData['customer']) && isset($customerData['customer']['lastName']))
+            $user->lastName = $customerData['customer']['lastName'];
         
         foreach($user->getFieldLayout()->getFields() AS $field) {
             $fieldHandle = $field->handle;
