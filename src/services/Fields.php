@@ -12,6 +12,9 @@ class Fields extends Component
     {
         $excludedFields = \futureactivities\rest\Plugin::getInstance()->settings->excludedFields;
         
+        if (!$excludedFields)
+            return [];
+        
         $excludes = array_filter($excludedFields, function ($e) {
                 return $e['visible'] == 1;
             }

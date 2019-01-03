@@ -39,6 +39,8 @@ Get a collection of entries.
                     title: 'Lorem Ipsum',
                     slug: 'lorem-ipsum',
                     postDate: '2018-12-25 00:00:00',
+                    parentId: false,
+                    descendants: [],
                     fields: [
                         'your-custom-field': '123'
                     ]
@@ -63,6 +65,8 @@ Get a specific entry.
                 title: 'Lorem Ipsum',
                 slug: 'lorem-ipsum',
                 postDate: '2018-12-25 00:00:00',
+                parentId: false,
+                descendants: [],
                 fields: [
                     'your-custom-field': '123'
                 ]
@@ -85,6 +89,8 @@ Get a collection of categories.
                     id: 0,
                     title: 'Lorem Ipsum',
                     slug: 'lorem-ipsum',
+                    parentId: false,
+                    descendants: [],
                     fields: [
                         'your-custom-field': '123'
                     ]
@@ -108,6 +114,8 @@ Get a specific category.
                 id: 0,
                 title: 'Lorem Ipsum',
                 slug: 'lorem-ipsum',
+                parentId: false,
+                descendants: [],
                 fields: [
                     'your-custom-field': '123'
                 ]
@@ -322,7 +330,7 @@ Get details about the current user.
                 ...
             }
             
-## User [/v1/users/{id}]
+## Users [/v1/users/{id}]
 
 ### Get Account [GET]
 
@@ -381,7 +389,7 @@ Update a users account.
 
 ## Passwords [/v1/users/password/reset]
 
-### Generate Reset Link [POST]
+### Generate reset link [POST]
 
 Generate the password reset link.
 
@@ -401,7 +409,7 @@ Generate the password reset link.
                 true
             }
         
-### Reset User Password [PUT]
+### Reset user password [PUT]
 
 Reset the user password
 

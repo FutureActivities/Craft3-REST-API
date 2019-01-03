@@ -13,6 +13,8 @@ class Element extends Model
     public $title;
     public $slug;
     public $enabled = true;
+    public $parentId = null;
+    public $descendants = [];
     public $fields = [];
     
     public function init()
@@ -28,6 +30,8 @@ class Element extends Model
             'title',
             'slug',
             'enabled',
+            'parentId',
+            'descendants',
             'fields'
         ];
     }
@@ -39,6 +43,8 @@ class Element extends Model
     public function extraFields()
     {
         $result = [];
+        
+        // Expand custom fields
         foreach($this->model->getFieldLayout()->getFields() AS $field) {
             $handle = $field->handle;
             $element = $this->model->$handle;
@@ -47,17 +53,38 @@ class Element extends Model
                 continue;
             
             // Determine element class
-            $class = 'futureactivities\rest\models\Element';
-            if ($element instanceof \craft\elements\db\EntryQuery) {
-                $class = 'futureactivities\rest\models\Entry';
-            } else if ($element instanceof \craft\elements\db\CategoryQuery) {
-                $class = 'futureactivities\rest\models\Category';
-            }
+            $class = $this->getElementClass($element);
             
             // Define expandable function
             $result[$handle] = function($model) use ($class, $element) {
                 $data = [];
                 foreach ($element->all() AS $item) {
+                    $data[] = new $class([
+                        'model' => $item
+                    ]);
+                }
+                
+                return $data;
+            };
+        }
+        
+        // Expand parent
+        if ($this->parentId) {
+            $result['parentId'] = function($model) {
+                $parent = $model->model->parent;
+                $class = $this->getElementClass($parent);
+                return new $class([
+                    'model' => $parent
+                ]);
+            };
+        }
+        
+        // Expand descendants
+        if (!empty($this->descendants)) {
+            $result['descendants'] = function($model) {
+                $class = $this->getElementClass($model->model);
+                $data = [];
+                foreach ($model->model->descendants->all() AS $item) {
                     $data[] = new $class([
                         'model' => $item
                     ]);
@@ -85,7 +112,9 @@ class Element extends Model
         $this->title = $this->model->title;
         $this->slug = $this->model->slug;
         $this->enabled = $this->model->enabled == 1;
-        
+        $this->parentId = $this->model->parent ? $this->model->parent->id : false;
+        $this->descendants = $this->model->hasDescendants ? $this->model->descendants->ids() : [];
+
         // Get the elements custom fields
         $excluded = Plugin::getInstance()->fields->getExcluded();
         $customFields = $this->model->getFieldLayout()->getFields();
@@ -94,5 +123,20 @@ class Element extends Model
             if (in_array($handle, $excluded)) continue;
             $this->fields[$handle] = Plugin::getInstance()->fields->process($this->model->$handle);
         }
+    }
+    
+    /**
+     * Check what type of element is being processed and return
+     * the appropriate model
+     */
+    protected function getElementClass($element)
+    {
+        if ($element instanceof \craft\elements\db\EntryQuery)
+            return 'futureactivities\rest\models\Entry';
+            
+        if ($element instanceof \craft\elements\db\CategoryQuery)
+            return 'futureactivities\rest\models\Category';
+        
+        return 'futureactivities\rest\models\Element';
     }
 }

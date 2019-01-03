@@ -12,6 +12,9 @@ class Sections extends Component
     {
         $excludedSections = \futureactivities\rest\Plugin::getInstance()->settings->excludedSections;
         
+        if (!$excludedSections)
+            return [];
+            
         $excludes = array_filter($excludedSections, function ($e) {
                 return $e['visible'] == 1;
             }
