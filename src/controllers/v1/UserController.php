@@ -182,6 +182,14 @@ class UserController extends ActiveController
     }
     
     /**
+     * Options request
+     */
+    public function actionOptions()
+    {
+        return true;
+    }
+    
+    /**
      * Check user is authorised to edit users.
      */
     public function checkAccess($action, $model = null, $params = [])

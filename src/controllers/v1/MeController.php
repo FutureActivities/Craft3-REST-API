@@ -22,4 +22,12 @@ class MeController extends ActiveController
     {
         return Plugin::getInstance()->user->auth();
     }
+    
+    /**
+     * Options request
+     */
+    public function actionOptions()
+    {
+        return true;
+    }
 }
