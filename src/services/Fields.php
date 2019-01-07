@@ -2,9 +2,12 @@
 namespace futureactivities\rest\services;
 
 use yii\base\Component;
+use futureactivities\rest\events\FieldEvent;
 
 class Fields extends Component
 {
+    const EVENT_PROCESS_FIELD = 'processField';
+    
     /**
      * Get fields to be excluded from results
      */
@@ -48,6 +51,14 @@ class Fields extends Component
         
         if (is_a($field, 'craft\redactor\FieldData'))
             return $field->getParsedContent();
+        
+        $event = new FieldEvent([
+            'field' => $field
+        ]);
+        $this->trigger(self::EVENT_PROCESS_FIELD, $event);
+        
+        if ($event->data)
+            return $event->data;
         
         return 'Field not yet supported.';
     }

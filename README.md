@@ -46,6 +46,23 @@ Configure which custom fields are available in the API results.
 
 Configure which sections are available in the API results.
 
+## Events
+
+### Field Event
+
+This plugin only supports a limited number of field types in the API responses, for other field
+types and custom field types you can process the response yourself using the following event:
+
+    Event::on(\futureactivities\rest\services\Fields::class, \futureactivities\rest\services\Fields::EVENT_PROCESS_FIELD, function(Event $event) {
+        $field = $event->field;
+        
+        if (is_a($field, 'namespace\plugin\CustomFieldType'))
+            $event->data = [
+                'key' => 'value'   
+            ];
+        }
+    });
+
 ## Cron
 
 ### Expiring tokens

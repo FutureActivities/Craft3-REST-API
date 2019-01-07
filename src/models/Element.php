@@ -47,30 +47,32 @@ class Element extends Model
         $result = [];
         
         // Expand custom fields
-        foreach($this->model->getFieldLayout()->getFields() AS $field) {
-            $handle = $field->handle;
-            $element = $this->model->$handle;
-            
-            if (get_parent_class($element) !== 'craft\elements\db\ElementQuery')
-                continue;
-            
-            // Determine element class
-            $class = $this->getElementClass($element);
-            
-            // Define expandable function
-            $result[$handle] = function($model) use ($class, $element) {
-                $data = [];
+        if ($fieldLayout = $this->model->getFieldLayout()) {
+            foreach($fieldLayout->getFields() AS $field) {
+                $handle = $field->handle;
+                $element = $this->model->$handle;
                 
-                // var_dump(get_class($element));
-                // die();
-                foreach ($element->all() AS $item) {
-                    $data[] = new $class([
-                        'model' => $item
-                    ]);
-                }
+                if (get_parent_class($element) !== 'craft\elements\db\ElementQuery')
+                    continue;
                 
-                return $data;
-            };
+                // Determine element class
+                $class = $this->getElementClass($element);
+                
+                // Define expandable function
+                $result[$handle] = function($model) use ($class, $element) {
+                    $data = [];
+                    
+                    // var_dump(get_class($element));
+                    // die();
+                    foreach ($element->all() AS $item) {
+                        $data[] = new $class([
+                            'model' => $item
+                        ]);
+                    }
+                    
+                    return $data;
+                };
+            }
         }
         
         // Expand parent
@@ -122,12 +124,14 @@ class Element extends Model
         $this->descendants = $this->model->hasDescendants ? $this->model->descendants->ids() : [];
 
         // Get the elements custom fields
-        $excluded = Plugin::getInstance()->fields->getExcluded();
-        $customFields = $this->model->getFieldLayout()->getFields();
-        foreach($customFields AS $field) {
-            $handle = $field->handle;
-            if (in_array($handle, $excluded)) continue;
-            $this->fields[$handle] = Plugin::getInstance()->fields->process($this->model->$handle);
+        if ($fieldLayout = $this->model->getFieldLayout()) {
+            $excluded = Plugin::getInstance()->fields->getExcluded();
+            $customFields = $fieldLayout->getFields();
+            foreach($customFields AS $field) {
+                $handle = $field->handle;
+                if (in_array($handle, $excluded)) continue;
+                $this->fields[$handle] = Plugin::getInstance()->fields->process($this->model->$handle);
+            }
         }
     }
     
