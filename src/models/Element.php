@@ -149,6 +149,9 @@ class Element extends Model
             
         if ($element instanceof \craft\elements\db\CategoryQuery)
             return 'futureactivities\rest\models\Category';
+            
+        if ($element instanceof \craft\elements\db\AssetQuery)
+            return 'futureactivities\rest\models\Asset';
         
         return 'futureactivities\rest\models\Element';
     }
