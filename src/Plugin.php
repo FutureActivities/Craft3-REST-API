@@ -37,6 +37,12 @@ class Plugin extends \craft\base\Plugin
                     'controller' => 'rest/v1/category'
                 ];
                 
+                // Globals
+                $event->rules[] = [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'rest/v1/global'
+                ];
+                
                 // Tags
                 $event->rules[] = [
                     'class' => 'yii\rest\UrlRule',
