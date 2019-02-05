@@ -7,7 +7,6 @@ use futureactivities\rest\events\FieldEvent;
 class Fields extends Component
 {
     const EVENT_PROCESS_FIELD = 'processField';
-    
     /**
      * Get fields to be excluded from results
      */
@@ -55,10 +54,14 @@ class Fields extends Component
         $event = new FieldEvent([
             'field' => $field
         ]);
+        
         $this->trigger(self::EVENT_PROCESS_FIELD, $event);
         
-        if ($event->data)
+        if (!is_null($event->data))
             return $event->data;
+    
+        if ($event->field) // Added to support other fields like Colour Swatches
+            return $event->field;
         
         return 'Field not yet supported.';
     }

@@ -8,12 +8,14 @@ class Entry extends Element
 {
     public $postDate;
     public $expiryDate;
+    public $elementType;
     
     public function fields()
     {
         $fields = parent::fields();
         $fields[] = 'postDate';
         $fields[] = 'expiryDate';
+        $fields[] = 'elementType';
         
         return $fields;
     }
@@ -27,5 +29,6 @@ class Entry extends Element
         
         $this->postDate = $this->model->postDate;
         $this->expiryDate = $this->model->expiryDate;
+        $this->elementType = $this->model->type->handle;
     }
 }

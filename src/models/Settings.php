@@ -11,6 +11,7 @@ class Settings extends Model
     public $tags = true;
     public $excludedFields;
     public $excludedSections;
+    public $supportedPlugins;
 
     public function rules()
     {

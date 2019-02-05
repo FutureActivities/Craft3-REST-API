@@ -17,5 +17,5 @@ class FieldEvent extends Event
     /**
      * @var array The parsed field data
      */
-    public $data = [];
+    public $data = null;
 }
