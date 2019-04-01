@@ -15,6 +15,15 @@ class Globals extends Element
         $fields = parent::fields();
         $fields[] = 'handle';
         
+        if (($key = array_search('slug', $fields)) !== false)
+            unset($fields[$key]);
+            
+        if (($key = array_search('url', $fields)) !== false)
+            unset($fields[$key]);
+            
+         if (($key = array_search('parentId', $fields)) !== false)
+            unset($fields[$key]);
+        
         return $fields;
     }
     
@@ -25,6 +34,7 @@ class Globals extends Element
             
         parent::processModel();
         
+        $this->title = $this->model->name;
         $this->handle = $this->model->handle;
     }
 }
