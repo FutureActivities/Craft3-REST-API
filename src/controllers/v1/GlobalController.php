@@ -10,7 +10,7 @@ use yii\data\DataFilter;
 use futureactivities\rest\errors\BadRequestException;
 use futureactivities\rest\traits\ActionRemovable;
 use futureactivities\rest\Plugin;
-use futureactivities\rest\data\ElementDataProvider;
+use futureactivities\rest\data\GlobalDataProvider;
 
 class GlobalController extends ActiveController
 {
@@ -33,7 +33,7 @@ class GlobalController extends ActiveController
                 $query->$key($value);
         }
         
-        return new ElementDataProvider([
+        return new GlobalDataProvider([
             'query' => $query
         ]);
     }
