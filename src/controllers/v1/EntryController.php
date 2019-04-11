@@ -21,6 +21,7 @@ class EntryController extends ActiveController
     public function actionIndex()
     {
         $query = Entry::find();
+        $perPage = Craft::$app->request->getParam('per-page');
         
         if (Plugin::getInstance()->settings->disabled == 1)
             $query->status(null);
@@ -43,8 +44,13 @@ class EntryController extends ActiveController
             $query->section = $sectionQuery;
         }
         
+        $pagination = is_null($perPage) || $perPage > 0 ? [
+            'defaultPageSize' => 50,
+        ] : false;
+        
         return new EntryDataProvider([
-            'query' => $query
+            'query' => $query,
+            'pagination' => $pagination
         ]);
     }
     
