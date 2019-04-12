@@ -1,16 +1,23 @@
-# Future Activities Craft 3 REST API
+# Craft 3 REST API
 
 The REST API plugin by FutureActivities provides easy to use API endpoints for any Craft 3 installation. No configuration required, 
 just enable the plugin and the endpoints are immediately available.
 
 You can optionally exclude certain fields and sections from the API to avoid exposing data.
 
+## Features
+
+- Get all Entries, Categories, Globals, Tags, and Assets.
+- Authenticate and manage users.
+- Build on top of Yii 2 RESTful Web Services - supports expands, fields, pagination.
+- Exclude specific fields or sections from being included in the response.
+
 ## Usage
 
-Full documentation of all endpoints can be found at:
+Further documentation of available endpoints can be found at:
 
 [https://craftrest.docs.apiary.io/](https://craftrest.docs.apiary.io/)
-    
+
 ## Examples
 
 Get all categories:
@@ -24,6 +31,10 @@ Get all categories with the related field expanded - this will return data objec
 Get a specific category
 
     GET /rest/v1/categories/18
+
+Get all entries belonging to the news channel & limit results to slug and title only:
+
+    GET /rest/v1/entries?filter[section]=news&fields=slug,title
 
 ## Settings
 
