@@ -12,6 +12,13 @@ You can optionally exclude certain fields and sections from the API to avoid exp
 - Build on top of Yii 2 RESTful Web Services - supports expands, fields, pagination.
 - Exclude specific fields or sections from being included in the response.
 
+## Installation
+
+Install via composer:
+
+    composer require futureactivities/craft3-rest-api
+    
+
 ## Usage
 
 Further documentation of available endpoints can be found at:
