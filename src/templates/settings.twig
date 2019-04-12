@@ -15,8 +15,7 @@
 {% include '_includes/tabs' with { tabs: [
     {label: 'General', url: '#general'}, 
     {label: 'Fields', url: '#fields'}, 
-    {label: 'Sections', url: '#sections'}, 
-    {label: 'Plugins', url: '#plugins'}
+    {label: 'Sections', url: '#sections'}
 ]}%}
 {% endblock %}
 
@@ -139,28 +138,6 @@
             }
         },
         rows: excludedSectionRows,
-        staticRows: true
-    }) }}
-</div>
-<div id="plugins" class="hidden">
-    {{ forms.editableTableField({
-        id: 'supportedPlugins',
-        name: 'settings[supportedPlugins]',
-        cols: {
-            id: {
-                type: 'heading',
-                heading: 'Plugin Handle'
-            },
-            name: {
-                type: 'heading',
-                heading: 'Plugin Name'
-            },
-            supported: {
-                type: 'lightswitch',
-                heading: 'Support?'
-            }
-        },
-        rows: supportedPluginsRows,
         staticRows: true
     }) }}
 </div>

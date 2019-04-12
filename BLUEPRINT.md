@@ -11,13 +11,14 @@ You can optionally exclude certain fields and sections from the API to avoid exp
 
 # Group Entries
 
-## Collection [/v1/entries{?perpage,page,search}]
+## Collection [/v1/entries{?filter,perpage,page,search}]
 
 ### List [GET]
 
 Get a collection of entries.
 
 + Parameters
+    + filter (array) - Optional filter results by fields. Supports any value you can do with an [element query](https://docs.craftcms.com/v3/dev/element-queries/entry-queries.html)
     + perpage (number) - The number of entries to return per page
     + page (number) - The current pages
     + search (string) - Optional search data as defined in the [Craft CMS documentation](https://docs.craftcms.com/v3/searching.html)
@@ -74,11 +75,17 @@ Get a specific entry.
             
 # Group Categories
             
-## Collection [/v1/categories]
+## Collection [/v1/categories{?filter,perpage,page,search}]
 
 ### List [GET]
 
 Get a collection of categories.
+
++ Parameters
+    + filter (array) - Optional filter results by fields. Supports any value you can do with an [element query](https://docs.craftcms.com/v3/dev/element-queries/entry-queries.html)
+    + perpage (number) - The number of entries to return per page
+    + page (number) - The current pages
+    + search (string) - Optional search data as defined in the [Craft CMS documentation](https://docs.craftcms.com/v3/searching.html)
 
 + Response 200 (application/json)
 
@@ -102,6 +109,67 @@ Get a collection of categories.
 ### Get [GET]
 
 Get a specific category.
+
++ Parameters
+    + expand (string) - Comma separated list of Element fields to expand. If not set, element IDs are returned in the response.
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                id: 0,
+                title: 'Lorem Ipsum',
+                slug: 'lorem-ipsum',
+                parentId: false,
+                descendants: [],
+                fields: [
+                    'your-custom-field': '123'
+                ]
+            }
+            
+# Group Globals
+
+## Collection [/v1/globals{?perpage,page,search}]
+
+### List [GET]
+
+Get a collection of globals.
+
++ Parameters
+    + perpage (number) - The number of entries to return per page
+    + page (number) - The current pages
+    + search (string) - Optional search data as defined in the [Craft CMS documentation](https://docs.craftcms.com/v3/searching.html)
+
++ Response 200 (application/json)
+
+    + Headers
+
+            X-Pagination-Total-Count: XX
+            X-Pagination-Page-Count: XX
+            X-Pagination-Current-Page: X
+            X-Pagination-Per-Page: X
+        
+    + Body
+
+            [
+                {
+                    id: 0,
+                    title: 'Lorem Ipsum',
+                    slug: 'lorem-ipsum',
+                    parentId: false,
+                    descendants: [],
+                    fields: [
+                        'your-custom-field': '123'
+                    ]
+                }
+            ]
+
+## Entry [/v1/globals/{id}{?expand}]
+
+### Get [GET]
+
+Get a specific global.
 
 + Parameters
     + expand (string) - Comma separated list of Element fields to expand. If not set, element IDs are returned in the response.
@@ -286,7 +354,7 @@ Get a list of users.
 
 Create a new user.
 
-+ Request (application/json)
++ Request (application/x-www-form-urlencoded)
 
     + Body
 

@@ -24,7 +24,6 @@ Get all categories with the related field expanded - this will return data objec
 Get a specific category
 
     GET /rest/v1/categories/18
-    
 
 ## Settings
 
