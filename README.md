@@ -1,7 +1,7 @@
 # Craft 3 REST API
 
-The REST API plugin by FutureActivities provides easy to use API endpoints for any Craft 3 installation. No configuration required, 
-just enable the plugin and the endpoints are immediately available.
+The REST API plugin by FutureActivities provides easy to use API endpoints for any Craft 3 installation. 
+No configuration required, just enable the plugin and the endpoints are immediately available.
 
 You can optionally exclude certain fields and sections from the API to avoid exposing data.
 
@@ -83,3 +83,10 @@ the following command:
     ./craft rest/token/expire <seconds>
     
 `<seconds>` is optional. Default is 3600 seconds (1 hour).
+
+## Roadmap
+
+The following features are planned for future versions:
+
+- API Authentication - Limit the use of the API to authenticated users only.
+- Limit the inclusion of fields/sections/etc. to certain user roles.
