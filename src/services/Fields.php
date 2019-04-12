@@ -7,6 +7,7 @@ use futureactivities\rest\events\FieldEvent;
 class Fields extends Component
 {
     const EVENT_PROCESS_FIELD = 'processField';
+    
     /**
      * Get fields to be excluded from results
      */

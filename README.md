@@ -79,6 +79,21 @@ types and custom field types you can process the response yourself using the fol
             ];
         }
     });
+    
+### Extra Fields Event
+
+Sometimes you might want to include additional data in the response, the following event will allow you to add your own fields
+to the element.
+
+    Event::on(\futureactivities\rest\models\Element::class, \futureactivities\rest\models\Element::EVENT_EXTRA_FIELDS, function(Event $event) {
+        $model = $event->model;
+        
+        if (is_a($model, 'craft\elements\Entry') && $model->section->handle == 'news') {
+            $event->fields = [
+                'myCustomField' => 'Hello'  
+            ];
+        }
+    });
 
 ## Cron
 

@@ -4,9 +4,12 @@ namespace futureactivities\rest\models;
 use \craft\base\Model;
 use futureactivities\rest\Plugin;
 use futureactivities\rest\models\Category;
+use futureactivities\rest\events\ExtraFieldsEvent;
 
 class Element extends Model
 {
+    const EVENT_EXTRA_FIELDS = 'extraFields';
+    
     public $model;
     
     public $id;
@@ -132,6 +135,15 @@ class Element extends Model
                 if (in_array($handle, $excluded)) continue;
                 $this->fields[$handle] = Plugin::getInstance()->fields->process($this->model->$handle);
             }
+            
+            $event = new ExtraFieldsEvent([
+                'model' => $this->model
+            ]);
+            
+            $this->trigger(self::EVENT_EXTRA_FIELDS, $event);
+            
+            if (!is_null($event->fields))
+                $this->fields = array_merge($this->fields, $event->fields);
         }
     }
     
