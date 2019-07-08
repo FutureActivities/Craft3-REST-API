@@ -7,11 +7,13 @@ use futureactivities\rest\Plugin;
 class Asset extends Element
 {
     public $transform = null;
+    public $focalPoint = [];
     
     public function fields()
     {
         $fields = parent::fields();
         $fields[] = 'url';
+        $fields[] = 'focalPoint';
         
         return $fields;
     }
@@ -22,6 +24,8 @@ class Asset extends Element
             return;
             
         parent::processModel();
+        
+        $this->focalPoint = $this->model->focalPoint;
         
         if ($this->transform)
             $this->url = $this->model->getUrl($this->transform);
