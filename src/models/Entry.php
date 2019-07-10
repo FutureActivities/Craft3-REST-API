@@ -37,6 +37,9 @@ class Entry extends Element
     
     private function formatAuthor($author)
     {
+        if (!$author)
+            return [];
+        
         return [
             'id' => $author->id,
             'firstName' => $author->firstName,
