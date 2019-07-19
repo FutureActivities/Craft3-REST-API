@@ -31,6 +31,7 @@ class Entry extends Element
         
         $this->author = $this->formatAuthor($this->model->author);
         $this->postDate = $this->model->postDate;
+        $this->postDate->string = $this->model->postDate->format('Y-m-d\TH:i:s.\0\0\0\Z');
         $this->expiryDate = $this->model->expiryDate;
         $this->elementType = $this->model->type->handle;
     }
