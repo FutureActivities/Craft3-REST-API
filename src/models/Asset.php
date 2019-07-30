@@ -8,12 +8,14 @@ class Asset extends Element
 {
     public $transform = null;
     public $focalPoint = [];
+    public $kind = null;
     
     public function fields()
     {
         $fields = parent::fields();
         $fields[] = 'url';
         $fields[] = 'focalPoint';
+        $fields[] = 'kind';
         
         return $fields;
     }
@@ -25,6 +27,7 @@ class Asset extends Element
             
         parent::processModel();
         
+        $this->kind = $this->model->kind;
         $this->focalPoint = $this->model->focalPoint;
         
         if ($this->transform)
