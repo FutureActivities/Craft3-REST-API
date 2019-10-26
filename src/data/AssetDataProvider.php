@@ -18,7 +18,8 @@ class AssetDataProvider extends \yii\data\ActiveDataProvider
         $result = [];
         foreach ($models AS $model) {
             $result[] = new Asset([
-                'model' => $model
+                'model' => $model,
+                'transform' => \Craft::$app->request->getParam('transforms')
             ]);
         }
         

@@ -42,7 +42,8 @@ class CategoryController extends ActiveController
         $category = Category::find()->status(null)->id($id)->one();
         
         return new \futureactivities\rest\models\Category([
-            'model' => $category
+            'model' => $category,
+            'transform' => \Craft::$app->request->getParam('transforms')
         ]);
     }
     

@@ -18,7 +18,8 @@ class EntryDataProvider extends \yii\data\ActiveDataProvider
         $result = [];
         foreach ($models AS $model) {
             $result[] = new Entry([
-                'model' => $model
+                'model' => $model,
+                'transform' => \Craft::$app->request->getParam('transforms')
             ]);
         }
         

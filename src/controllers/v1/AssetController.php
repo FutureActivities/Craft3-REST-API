@@ -39,12 +39,12 @@ class AssetController extends ActiveController
     {
         $this->checkAccess($id);
         
-        $imageTransform = Craft::$app->request->getParam('imageTransform');
+        $imageTransforms = Craft::$app->request->getParam('transforms');
         
         $tag = Asset::find()->status(null)->id($id)->one();
         $asset = new \futureactivities\rest\models\Asset([
             'model' => $tag,
-            'transform' => $imageTransform
+            'transform' => $imageTransforms
         ]);
         
         return $asset;

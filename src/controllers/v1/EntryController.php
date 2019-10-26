@@ -67,7 +67,8 @@ class EntryController extends ActiveController
             throw new BadRequestException('Could not find entry');
         
         return new \futureactivities\rest\models\Entry([
-            'model' => $entry
+            'model' => $entry,
+            'transform' => \Craft::$app->request->getParam('transforms')
         ]);
     }
     
