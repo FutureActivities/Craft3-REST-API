@@ -21,6 +21,8 @@ class TagController extends ActiveController
         $this->checkAccess(null);
         
         $query = Tag::find()->status(null)->orderBy(null);
+        $perPage = Craft::$app->request->getParam('per-page') ?? 20;
+        $page = Craft::$app->request->getParam('page') ?? 1;
         
         if ($search = Craft::$app->request->getParam('search'))
             $query->search($search);
@@ -31,7 +33,11 @@ class TagController extends ActiveController
         }
         
         return new ElementDataProvider([
-            'query' => $query
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => $perPage,
+                'page' => $page - 1
+            ]
         ]);
     }
     
