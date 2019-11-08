@@ -11,6 +11,7 @@ class Element extends Model
     const EVENT_EXTRA_FIELDS = 'extraFields';
     
     public $model;
+    public $transform;
     
     public $id;
     public $title;
@@ -61,15 +62,19 @@ class Element extends Model
                 // Determine element class
                 $class = $this->getElementClass($element);
                 
+                $transform = null;
+                if ($this->transform && isset($this->transform[$handle])) {
+                    $transform = $this->transform[$handle];
+                }
+                
                 // Define expandable function
-                $result[$handle] = function($model) use ($class, $element) {
+                $result[$handle] = function($model) use ($class, $element, $transform) {
                     $data = [];
                     
-                    // var_dump(get_class($element));
-                    // die();
                     foreach ($element->all() AS $item) {
                         $data[] = new $class([
-                            'model' => $item
+                            'model' => $item,
+                            'transform' => $transform
                         ]);
                     }
                     
@@ -96,7 +101,8 @@ class Element extends Model
                 $data = [];
                 foreach ($model->model->descendants->all() AS $item) {
                     $data[] = new $class([
-                        'model' => $item
+                        'model' => $item,
+                        'transform' => $this->transform
                     ]);
                 }
                 

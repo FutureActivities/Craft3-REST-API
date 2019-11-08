@@ -18,7 +18,8 @@ class CategoryDataProvider extends \yii\data\ActiveDataProvider
         $result = [];
         foreach ($models AS $model) {
             $result[] = new Category([
-                'model' => $model
+                'model' => $model,
+                'transform' => \Craft::$app->request->getParam('transforms')
             ]);
         }
         

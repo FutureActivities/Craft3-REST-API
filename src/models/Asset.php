@@ -7,6 +7,7 @@ use futureactivities\rest\Plugin;
 class Asset extends Element
 {
     public $transform = null;
+    public $transforms = [];
     public $focalPoint = [];
     public $kind = null;
     
@@ -14,6 +15,7 @@ class Asset extends Element
     {
         $fields = parent::fields();
         $fields[] = 'url';
+        $fields[] = 'transforms';
         $fields[] = 'focalPoint';
         $fields[] = 'kind';
         
@@ -30,9 +32,13 @@ class Asset extends Element
         $this->kind = $this->model->kind;
         $this->focalPoint = $this->model->focalPoint;
         
-        if ($this->transform)
-            $this->url = $this->model->getUrl($this->transform);
-        else
-            $this->url = $this->model->getUrl();
+        // Process any transforms
+        if ($this->transform) {
+            $transforms = explode(',', $this->transform);
+            foreach($transforms AS $transform)
+                $this->transforms[$transform] = $this->model->getUrl($transform);
+        }
+        
+        $this->url = $this->model->getUrl();
     }
 }

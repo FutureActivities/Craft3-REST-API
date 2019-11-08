@@ -42,6 +42,10 @@ Get a specific category
 Get all entries belonging to the news channel & limit results to slug and title only:
 
     GET /rest/v1/entries?filter[section]=news&fields=slug,title
+    
+Get all entries in the news channel, expand featured image and apply a specific image transform:
+
+    GET /rest/v1/entries?filter[section]=news&expand=featuredImage&transforms[featuredImage]=featuredFull,featuredThumb
 
 ## Settings
 
@@ -105,6 +109,16 @@ the following command:
     ./craft rest/token/expire <seconds>
     
 `<seconds>` is optional. Default is 3600 seconds (1 hour).
+
+## Changelog
+
+### 1.1
+
+- Asset image transforms now expects `transforms` on the endpoint instead of `imageTransform`. This now allows a comma separated value of transform keys and will return an array of transforms along with the original image url.
+- Added support to specify image transforms on entry & category requests, in the following format:
+    
+    `transforms[field] = 'transformKey,anotherKey'`
+    `transforms[parent][child] = 'transformKey'`
 
 ## Roadmap
 
