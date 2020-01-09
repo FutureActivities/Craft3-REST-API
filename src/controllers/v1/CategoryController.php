@@ -20,6 +20,8 @@ class CategoryController extends ActiveController
     public function actionIndex()
     {
         $query = Category::find();
+        $perPage = Craft::$app->request->getParam('per-page');
+        $page = Craft::$app->request->getParam('page') ?? 1;
         
         if (Plugin::getInstance()->settings->disabled == 1)
             $query->status(null);
@@ -31,9 +33,15 @@ class CategoryController extends ActiveController
             foreach ($filter AS $key => $value)
                 $query->$key($value);
         }
+        
+        $pagination = is_null($perPage) || $perPage > 0 ? [
+            'defaultPageSize' => 50,
+            'page' => $page - 1
+        ] : false;
 
         return new CategoryDataProvider([
-            'query' => $query
+            'query' => $query,
+            'pagination' => $pagination
         ]);
     }
     
