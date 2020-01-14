@@ -14,7 +14,7 @@ class GeneralController extends Controller
     
     public function actionUri($uri)
     {
-        $element = \Craft::$app->elements->getElementByUri($uri);
+        $element = \Craft::$app->elements->getElementByUri($uri, null, true);
         
         if (!$element)
             throw new BadRequestException('Unable to find element.');
