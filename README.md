@@ -112,6 +112,10 @@ the following command:
 
 ## Changelog
 
+### 1.1.2
+
+Fixed CMS settings layout
+
 ### 1.1
 
 - Asset image transforms now expects `transforms` on the endpoint instead of `imageTransform`. This now allows a comma separated value of transform keys and will return an array of transforms along with the original image url.
