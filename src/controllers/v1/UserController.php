@@ -148,7 +148,7 @@ class UserController extends ActiveController
      */
     public function actionVerify()
     {
-        if (! array_key_exists('verify_token', \Craft::$app->request->getBodyParams()))
+        if (! array_key_exists('verifyToken', \Craft::$app->request->getBodyParams()))
             throw new BadRequestException('verify_token parameter not found in the body.');
         
         return Plugin::getInstance()->user->verifyToken(\Craft::$app->request->getBodyParam('verifyToken'));
