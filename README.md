@@ -112,9 +112,11 @@ the following command:
 
 ## Changelog
 
-### 1.1.2
+### 1.2
 
-Fixed CMS settings layout
+- Fixed broken CMS settings layout
+- Fixed bug in token verification
+- Added `rest/v2/me` endpoint which returns a more useful User object that also works with field expands.
 
 ### 1.1
 

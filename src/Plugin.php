@@ -71,6 +71,11 @@ class Plugin extends \craft\base\Plugin
                     'pluralize' => false,
                     'controller' => 'rest/v1/me'
                 ];
+                $event->rules[] = [
+                    'class' => 'yii\rest\UrlRule',
+                    'pluralize' => false,
+                    'controller' => 'rest/v2/me'
+                ];
                 
                 // General
                 $event->rules['rest/v1/uri/<uri:.*>'] = 'rest/v1/general/uri';
