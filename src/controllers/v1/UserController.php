@@ -201,7 +201,7 @@ class UserController extends ActiveController
     {
         $currentUser = Plugin::getInstance()->user->auth();
         
-        if ($currentUser->id === $action)
+        if ($currentUser->id == $action)
             return true;
             
         if (!Craft::$app->userPermissions->doesUserHavePermission($currentUser->id, 'editUsers'))
