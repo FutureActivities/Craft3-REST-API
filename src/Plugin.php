@@ -63,7 +63,8 @@ class Plugin extends \craft\base\Plugin
                         'POST auth' => 'auth',
                         'POST verify' => 'verify',
                         'POST password/reset' => 'send-password-reset',
-                        'PUT password/reset' => 'do-password-reset'
+                        'PUT password/reset' => 'do-password-reset',
+                        'OPTIONS password/reset' => 'options'
                     ]
                 ];
                 $event->rules[] = [
