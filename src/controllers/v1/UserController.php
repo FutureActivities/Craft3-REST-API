@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\data\ActiveDataFilter;
 use yii\web\ForbiddenHttpException;
 use craft\elements\User;
+use craft\events\UserEvent;
 
 use futureactivities\rest\traits\ActionRemovable;
 use futureactivities\rest\errors\BadRequestException;
@@ -17,6 +18,9 @@ class UserController extends ActiveController
     use ActionRemovable;
     
     public $modelClass = 'craft\records\User';
+    
+    const EVENT_PRE_AUTH = 'preAuth';
+    const EVENT_POST_AUTH = 'postAuth';
  
     /**
      * User Login
@@ -31,6 +35,10 @@ class UserController extends ActiveController
         
         $user = Craft::$app->getUsers()->getUserByUsernameOrEmail($loginName);
         
+        $this->trigger(self::EVENT_PRE_AUTH, new UserEvent([
+            'user' => $user ? $user : $loginName
+        ]));
+        
         if (!$user || $user->password === null)
             throw new \Exception('Invalid user and/or password.');
             
@@ -42,6 +50,10 @@ class UserController extends ActiveController
         Craft::$app->users->handleValidLogin($user);
         
         $token = Plugin::getInstance()->user->generateToken($user->id);
+        
+        $this->trigger(self::EVENT_POST_AUTH, new UserEvent([
+            'user' => $user
+        ]));
         
         return [
             'token' => $token 
