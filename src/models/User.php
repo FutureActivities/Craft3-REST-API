@@ -13,6 +13,7 @@ class User extends Element
     public $status;
     public $dateCreated;
     public $lastLoginDate;
+    public $groups;
     
     public function fields()
     {
@@ -25,7 +26,8 @@ class User extends Element
             'status',
             'dateCreated',
             'lastLoginDate',
-            'fields'
+            'fields',
+            'groups'
         ];
     }
     
@@ -45,5 +47,6 @@ class User extends Element
         $this->dateCreated->string = $this->model->dateCreated->format('Y-m-d\TH:i:s.\0\0\0\Z');
         $this->lastLoginDate = $this->model->lastLoginDate;
         $this->lastLoginDate->string = $this->model->lastLoginDate->format('Y-m-d\TH:i:s.\0\0\0\Z');
+        $this->groups = $this->model->getGroups();
     }
 }
