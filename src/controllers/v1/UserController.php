@@ -84,7 +84,7 @@ class UserController extends ActiveController
         $user->firstName = $customerData['customer']['firstName'];
         $user->lastName = $customerData['customer']['lastName'];
         
-        foreach($user->getFieldLayout()->getFields() AS $field) {
+        foreach($user->getFieldLayout()->getCustomFields() AS $field) {
             $fieldHandle = $field->handle;
             if (isset($customerData['customer'][$fieldHandle]))
                 $user->$fieldHandle = $customerData['customer'][$fieldHandle];
@@ -134,7 +134,7 @@ class UserController extends ActiveController
         if (isset($customerData['customer']) && isset($customerData['customer']['lastName']))
             $user->lastName = $customerData['customer']['lastName'];
         
-        foreach($user->getFieldLayout()->getFields() AS $field) {
+        foreach($user->getFieldLayout()->getCustomFields() AS $field) {
             $fieldHandle = $field->handle;
             if (isset($customerData['customer'][$fieldHandle]))
                 $user->$fieldHandle = $customerData['customer'][$fieldHandle];

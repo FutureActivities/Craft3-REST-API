@@ -64,6 +64,8 @@ class Plugin extends \craft\base\Plugin
                         'POST verify' => 'verify',
                         'POST password/reset' => 'send-password-reset',
                         'PUT password/reset' => 'do-password-reset',
+                        'OPTIONS auth' => 'options',
+                        'OPTIONS verify' => 'options',
                         'OPTIONS password/reset' => 'options'
                     ]
                 ];
