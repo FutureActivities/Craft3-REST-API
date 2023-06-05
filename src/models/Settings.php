@@ -12,7 +12,7 @@ class Settings extends Model
     public $excludedFields;
     public $excludedSections;
 
-    public function rules()
+    public function rules(): array
     {
         return [];
     }

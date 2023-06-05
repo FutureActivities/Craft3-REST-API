@@ -11,20 +11,20 @@
 {% set title = plugin.name %}
 {% import "_includes/forms" as forms %}
 
-{% block tabs %}
-<header id="content-header" class="pane-header">
-{% include '_includes/tabs' with { 
-    containerAttributes: {
-        id: 'tabs',
-    },
-    tabs: [
-        {label: 'General', url: '#tab-general'}, 
-        {label: 'Fields', url: '#tab-fields'}, 
-        {label: 'Sections', url: '#tab-sections'}
-    ]
-}%}
-</header>
-{% endblock %}
+{% set tabs = {
+  general: {
+    label: 'General',
+    url: '#general',
+  },
+  fields: {
+    label: 'Fields',
+    url: '#fields',
+  },
+  sections: {
+    label: 'Sections',
+    url: '#sections',
+  }
+} %}
 
 {% set excludedFieldRows = [] %}
 {% set excludedSectionRows = [] %}
@@ -65,8 +65,7 @@
 <input type="hidden" name="pluginHandle" value="{{ plugin.handle }}">
 {{ redirectInput('settings') }}
 
-<div id="fields">
-<div id="tab-general" class="flex-fields">
+<div id="general" class="flex-fields">
     {{ forms.lightswitchField({
         label: 'Include Disabled?'|t('app'),
         instructions: 'Should disabled entries, categories, etc. be included in the API results.',
@@ -91,7 +90,8 @@
         on: settings.tags
     }) }}
 </div>
-<div id="tab-fields" class="flex-fields hidden">
+
+<div id="fields" class="flex-fields hidden">
     {{ forms.textField({
         id: 'fieldSearch',
         label: 'Visibility of fields in the API',
@@ -120,7 +120,8 @@
         staticRows: true
     }) }}
 </div>
-<div id="tab-sections" class="flex-fields hidden">
+
+<div id="sections" class="flex-fields hidden">
     {{ forms.textField({
         id: 'sectionSearch',
         label: 'Visibility of sections in the API',
@@ -148,7 +149,6 @@
         rows: excludedSectionRows,
         staticRows: true
     }) }}
-</div>
 </div>
 {% endblock %}
 

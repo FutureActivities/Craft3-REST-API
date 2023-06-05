@@ -15,7 +15,7 @@ class User extends Element
     public $lastLoginDate;
     public $groups;
     
-    public function fields()
+    public function fields(): array
     {
         return [
             'id',

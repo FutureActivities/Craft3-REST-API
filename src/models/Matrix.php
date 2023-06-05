@@ -8,7 +8,7 @@ class Matrix extends Element
 {
     public $handle;
     
-    public function fields()
+    public function fields(): array
     {
         return [
             'id',

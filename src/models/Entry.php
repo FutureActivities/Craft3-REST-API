@@ -11,7 +11,7 @@ class Entry extends Element
     public $expiryDate;
     public $elementType;
     
-    public function fields()
+    public function fields(): array
     {
         $fields = parent::fields();
         $fields[] = 'author';

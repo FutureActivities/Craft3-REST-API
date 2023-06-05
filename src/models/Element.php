@@ -22,13 +22,13 @@ class Element extends Model
     public $descendants = [];
     public $fields = [];
     
-    public function init()
+    public function init(): void
     {
         parent::init();
         $this->processModel();
     }
     
-    public function fields()
+    public function fields(): array
     {
         return [
             'id',
@@ -46,13 +46,13 @@ class Element extends Model
      * Fields that extend craft\elements\db\ElementQuery are expandable.
      * Adding ?expand=fieldname will return the formatted models instead of IDs.
      */
-    public function extraFields()
+    public function extraFields(): array
     {
         $result = [];
         
         // Expand custom fields
         if ($fieldLayout = $this->model->getFieldLayout()) {
-            foreach($fieldLayout->getFields() AS $field) {
+            foreach($fieldLayout->getCustomFields() AS $field) {
                 $handle = $field->handle;
                 $element = $this->model->$handle;
                 
@@ -135,7 +135,7 @@ class Element extends Model
         // Get the elements custom fields
         if ($fieldLayout = $this->model->getFieldLayout()) {
             $excluded = Plugin::getInstance()->fields->getExcluded();
-            $customFields = $fieldLayout->getFields();
+            $customFields = $fieldLayout->getCustomFields();
             foreach($customFields AS $field) {
                 $handle = $field->handle;
                 if (in_array($handle, $excluded)) continue;

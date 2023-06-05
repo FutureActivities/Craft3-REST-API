@@ -7,7 +7,7 @@ use craft\events\RegisterUrlRulesEvent;
 
 class Plugin extends \craft\base\Plugin
 {
-    public $hasCpSettings = true;
+    public bool $hasCpSettings = true;
     
     public function init()
     {
@@ -90,12 +90,12 @@ class Plugin extends \craft\base\Plugin
         ]);
     }
     
-    protected function createSettingsModel()
+    protected function createSettingsModel(): \craft\base\Model
     {
         return new \futureactivities\rest\models\Settings();
     }
     
-    public function getSettingsResponse()
+    public function getSettingsResponse(): mixed
     {
         return \Craft::$app->controller->renderTemplate('rest/settings', [
             'settings' => $this->getSettings(),

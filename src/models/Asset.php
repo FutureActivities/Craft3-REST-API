@@ -11,7 +11,7 @@ class Asset extends Element
     public $focalPoint = [];
     public $kind = null;
     
-    public function fields()
+    public function fields(): array
     {
         $fields = parent::fields();
         $fields[] = 'url';

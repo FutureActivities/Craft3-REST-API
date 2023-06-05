@@ -1,9 +1,11 @@
-# Craft 3 REST API
+# Craft REST API
 
-The REST API plugin by FutureActivities provides easy to use API endpoints for any Craft 3 installation. 
+The REST API plugin by FutureActivities provides easy to use API endpoints for any Craft 3 or 4 installation. 
 No configuration required, just enable the plugin and the endpoints are immediately available.
 
 You can optionally exclude certain fields and sections from the API to avoid exposing data.
+
+Use v1 for Craft 3, v2+ for Craft 4.
 
 ## Features
 
