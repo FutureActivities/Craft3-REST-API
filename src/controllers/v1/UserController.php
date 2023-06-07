@@ -128,11 +128,12 @@ class UserController extends ActiveController
         if (isset($customerData['customer']) && isset($customerData['customer']['email']))
             $user->email = $customerData['customer']['email'];
             
-        if (isset($customerData['customer']) && isset($customerData['customer']['firstName']))
-            $user->firstName = $customerData['customer']['firstName'];
+        if (isset($customerData['customer']) && isset($customerData['customer']['fullName']))
+            $user->fullName = $customerData['customer']['fullName'];
             
-        if (isset($customerData['customer']) && isset($customerData['customer']['lastName']))
-            $user->lastName = $customerData['customer']['lastName'];
+        // legacy support
+        if (isset($customerData['customer']) && isset($customerData['customer']['firstName']) && isset($customerData['customer']['lastName']))
+            $user->fullName = $customerData['customer']['firstName'].' '.$customerData['customer']['lastName'];
         
         foreach($user->getFieldLayout()->getCustomFields() AS $field) {
             $fieldHandle = $field->handle;
@@ -143,8 +144,10 @@ class UserController extends ActiveController
         if (isset($customerData['password']))
             $user->newPassword = $customerData['password'];
         
-        if (!Craft::$app->elements->saveElement($user))
-            throw new BadRequestException('Please correct any errors and try again.', $user->getErrors());
+        if (!Craft::$app->elements->saveElement($user)) {
+            echo 'Nope';die();
+        }
+            // throw new BadRequestException('Please correct any errors and try again.', $user->getErrors());
             
         return [
             'success' => true
