@@ -144,10 +144,8 @@ class UserController extends ActiveController
         if (isset($customerData['password']))
             $user->newPassword = $customerData['password'];
         
-        if (!Craft::$app->elements->saveElement($user)) {
-            echo 'Nope';die();
-        }
-            // throw new BadRequestException('Please correct any errors and try again.', $user->getErrors());
+        if (!Craft::$app->elements->saveElement($user))
+            throw new BadRequestException('Please correct any errors and try again.', $user->getErrors());
             
         return [
             'success' => true
