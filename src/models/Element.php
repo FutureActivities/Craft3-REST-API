@@ -56,7 +56,7 @@ class Element extends Model
                 $handle = $field->handle;
                 $element = $this->model->$handle;
                 
-                if (get_parent_class($element) !== 'craft\elements\db\ElementQuery')
+                if (!is_object($element) || get_parent_class($element) !== 'craft\elements\db\ElementQuery')
                     continue;
                 
                 // Determine element class
