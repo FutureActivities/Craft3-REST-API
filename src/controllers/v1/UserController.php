@@ -83,6 +83,7 @@ class UserController extends ActiveController
         $user->email = $customerData['customer']['email'];
         $user->firstName = $customerData['customer']['firstName'];
         $user->lastName = $customerData['customer']['lastName'];
+        $user->pending = true;
         
         foreach($user->getFieldLayout()->getCustomFields() AS $field) {
             $fieldHandle = $field->handle;
