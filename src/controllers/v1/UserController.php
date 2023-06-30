@@ -97,6 +97,8 @@ class UserController extends ActiveController
         if (!\Craft::$app->elements->saveElement($user))
             throw new BadRequestException('Please correct any errors and try again.', $user->getErrors());
             
+        \Craft::$app->getUsers()->sendNewEmailVerifyEmail($user);
+        
         return [
             'success' => true        
         ];
