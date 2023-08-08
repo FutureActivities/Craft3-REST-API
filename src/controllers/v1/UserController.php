@@ -94,9 +94,13 @@ class UserController extends ActiveController
         if ($password = $customerData['password'])
             $user->newPassword = $password;
         
-        if (!\Craft::$app->elements->saveElement($user))
-            throw new BadRequestException('Please correct any errors and try again.', $user->getErrors());
-            
+        if (!\Craft::$app->elements->saveElement($user)) {
+            $errors = $user->getErrors();
+            $last = end($errors);
+            $message = isset($last) && isset($last[0]) ? $last[0] : 'Unable to create user. Please check your email address and password and try again.';
+            throw new BadRequestException($message, $user->getErrors());
+        }
+        
         \Craft::$app->getUsers()->sendNewEmailVerifyEmail($user);
         
         return [
@@ -148,8 +152,8 @@ class UserController extends ActiveController
             $user->newPassword = $customerData['password'];
         
         if (!Craft::$app->elements->saveElement($user))
-            throw new BadRequestException('Please correct any errors and try again.', $user->getErrors());
-            
+            throw new BadRequestException('Unable to update user. Please ensure all required fields are populated.', $user->getErrors());
+        
         return [
             'success' => true
         ];
