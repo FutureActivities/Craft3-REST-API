@@ -100,6 +100,16 @@ to the element.
             ];
         }
     });
+    
+## Authentication
+
+If you are using the user authentication functionality of this plugin, then you may need to configure your server
+to ensure the authorisation headers are passed to Craft. For Apache this is done by adding the following to your
+conf file:
+
+    RewriteEngine On
+    RewriteCond %{HTTP:Authorization} .+
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
 ## Cron
 
