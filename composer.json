@@ -1,7 +1,7 @@
 {
   "name": "futureactivities/craft3-rest-api",
   "description": "Provides an easy to use REST API for Craft 4",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "type": "craft-plugin",
   "require": {
     "craftcms/cms": "^4.0.0"

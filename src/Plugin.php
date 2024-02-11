@@ -62,10 +62,12 @@ class Plugin extends \craft\base\Plugin
                     'extraPatterns' => [
                         'POST auth' => 'auth',
                         'POST verify' => 'verify',
+                        'POST activate' => 'activate',
                         'POST password/reset' => 'send-password-reset',
                         'PUT password/reset' => 'do-password-reset',
                         'OPTIONS auth' => 'options',
                         'OPTIONS verify' => 'options',
+                        'OPTIONS activate' => 'activate',
                         'OPTIONS password/reset' => 'options'
                     ]
                 ];

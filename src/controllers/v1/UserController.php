@@ -175,6 +175,22 @@ class UserController extends ActiveController
     }
     
     /**
+     * Activate a users account
+     */
+    public function actionActivate()
+    {
+        $code = \Craft::$app->getRequest()->getRequiredBodyParam('code');
+        $uid = \Craft::$app->getRequest()->getRequiredParam('id');
+        $userToProcess = \Craft::$app->getUsers()->getUserByUid($uid);
+        $isCodeValid = \Craft::$app->getUsers()->isVerificationCodeValidForUser($userToProcess, $code);
+
+        if (!$userToProcess || !$isCodeValid)
+            throw new BadRequestException('Invalid verification code.');
+            
+        return \Craft::$app->getUsers()->activateUser($userToProcess);
+    }
+    
+    /**
      * Send password reset link
      */
     public function actionSendPasswordReset()
